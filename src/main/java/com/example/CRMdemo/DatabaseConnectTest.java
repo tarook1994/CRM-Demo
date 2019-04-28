@@ -19,7 +19,7 @@ public class DatabaseConnectTest {
         try {
 
             session.beginTransaction();
-            Course c=  session.get(Course.class, 10);
+            Course c=  (Course) session.get(Course.class, 10);
             System.out.println(c.getTitle());
             session.getTransaction().commit();
 

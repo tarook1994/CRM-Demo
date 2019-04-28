@@ -8,6 +8,7 @@ public class CrmDemoApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(CrmDemoApplication.class, args);
+
 	}
 
 }
