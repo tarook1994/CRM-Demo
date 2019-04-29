@@ -10,4 +10,7 @@ public interface CustomerService {
 
     @Transactional
     List<Customer> getCustomers();
+
+    @Transactional
+    Customer getCustomerById(int id);
 }

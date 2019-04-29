@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -27,6 +28,13 @@ public class CustomerController {
     public List<Customer> getCustomerList(){
 
         return customerService.getCustomers();
+
+    }
+
+    @GetMapping("/id")
+    public Customer getCustomerById(@RequestParam int id){
+
+        return customerService.getCustomerById(id);
 
     }
 

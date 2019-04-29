@@ -14,12 +14,13 @@ import java.util.List;
 @Repository
 public class CustomerDAOImpl implements CustomerDAO {
 
+    @Autowired
+    SessionFactory sessionFactory;
+
     @Override
     @Transactional
     public List<Customer> getCustomers() {
-        SessionFactory sessionFactory = new Configuration().configure()
-                .addAnnotatedClass(Customer.class)
-                .buildSessionFactory();
+
 
         Session session = sessionFactory.getCurrentSession();
         try {
@@ -29,7 +30,24 @@ public class CustomerDAOImpl implements CustomerDAO {
             session.getTransaction().commit();
             return customerList;
         } finally {
+
             sessionFactory.close();
+        }
+    }
+
+    @Override
+    public Customer getCustomerById(int id) {
+        Session session = sessionFactory.getCurrentSession();
+        try {
+            session.beginTransaction();
+            //  Customer c = (Customer) session.get(Customer.class, 1);
+            Customer customer = (Customer) session.get(Customer.class ,id);
+            session.getTransaction().commit();
+            return customer;
+        } finally {
+
+            sessionFactory.close();
+
         }
     }
 }
