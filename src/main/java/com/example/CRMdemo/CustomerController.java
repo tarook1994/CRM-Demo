@@ -2,6 +2,8 @@ package com.example.CRMdemo;
 
 
 import com.example.CRMdemo.DAO.CustomerDAOImpl;
+import com.example.CRMdemo.Service.CustomerService;
+import com.example.CRMdemo.Service.CustomerServiceImpl;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -19,12 +21,12 @@ public class CustomerController {
 
 
     @Autowired
-    CustomerDAOImpl customerDAO;
+    CustomerServiceImpl customerService;
 
     @GetMapping("/all")
     public List<Customer> getCustomerList(){
 
-        return customerDAO.getCustomers();
+        return customerService.getCustomers();
 
     }
 
