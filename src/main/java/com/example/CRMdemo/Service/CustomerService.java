@@ -13,4 +13,7 @@ public interface CustomerService {
 
     @Transactional
     Customer getCustomerById(int id);
+
+    @Transactional
+    void deleteCustomer(int id);
 }

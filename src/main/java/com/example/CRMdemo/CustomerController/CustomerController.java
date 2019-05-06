@@ -21,26 +21,7 @@ public class CustomerController {
     @Autowired
     CustomerServiceImpl customerService;
 
-    @ExceptionHandler
-    public ResponseEntity<StudentErrorResponse> handleException(StudentNotFoundException exception) {
 
-        StudentErrorResponse error = new StudentErrorResponse();
-        error.setStatus(HttpStatus.NOT_FOUND.value());
-        error.setMessage(exception.getMessage());
-        error.setTimeStamp(System.currentTimeMillis());
-        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
-    }
-
-    //Adding exception handler to catch all exceptions!
-    @ExceptionHandler
-    public ResponseEntity<StudentErrorResponse> handleAnyException(Exception exception) {
-
-        StudentErrorResponse error = new StudentErrorResponse();
-        error.setStatus(HttpStatus.BAD_REQUEST.value());
-        error.setMessage(exception.getMessage());
-        error.setTimeStamp(System.currentTimeMillis());
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
-    }
 
     @GetMapping("/all")
     public List<Customer> getCustomerList() {
@@ -57,6 +38,12 @@ public class CustomerController {
 
         return customerService.getCustomerById(id);
 
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteCustomer(@PathVariable int id){
+        customerService.deleteCustomer(id);
+        return "Deleted Successfully";
     }
 
 
