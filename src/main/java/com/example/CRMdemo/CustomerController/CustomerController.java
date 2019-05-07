@@ -22,14 +22,14 @@ public class CustomerController {
     CustomerServiceImpl customerService;
 
 
-
+    @CrossOrigin
     @GetMapping("/all")
     public List<Customer> getCustomerList() {
 
         return customerService.getCustomers();
 
     }
-
+    @CrossOrigin
     @GetMapping("/{id}")
     public Customer getCustomerById(@PathVariable int id) {
         if (id > 4) {
