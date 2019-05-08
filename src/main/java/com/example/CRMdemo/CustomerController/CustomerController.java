@@ -3,16 +3,16 @@ package com.example.CRMdemo.CustomerController;
 
 import com.example.CRMdemo.Customer;
 import com.example.CRMdemo.CustomerController.Exception.StudentNotFoundException;
-import com.example.CRMdemo.POJOs.StudentErrorResponse;
 import com.example.CRMdemo.Service.CustomerServiceImpl;
 
+import com.example.CRMdemo.Student;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/customer")
 public class CustomerController {
@@ -44,6 +44,13 @@ public class CustomerController {
     public String deleteCustomer(@PathVariable int id){
         customerService.deleteCustomer(id);
         return "Deleted Successfully";
+    }
+
+    @CrossOrigin
+    @PostMapping("/add")
+    public String addCustomer(@RequestBody Customer customer){
+
+        return customerService.addCustomer(customer);
     }
 
 

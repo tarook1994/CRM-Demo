@@ -16,4 +16,7 @@ public interface CustomerService {
 
     @Transactional
     void deleteCustomer(int id);
+
+    @Transactional
+    String addCustomer(Customer customer);
 }
