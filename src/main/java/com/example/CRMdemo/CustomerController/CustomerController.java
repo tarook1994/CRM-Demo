@@ -14,7 +14,7 @@ import java.util.Map;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/customer")
+@RequestMapping("/api")
 public class CustomerController {
 
 
@@ -23,14 +23,14 @@ public class CustomerController {
 
 
     @CrossOrigin
-    @GetMapping("/all")
+    @GetMapping("/customer")
     public List<Customer> getCustomerList() {
 
         return customerService.getCustomers();
 
     }
     @CrossOrigin
-    @GetMapping("/{id}")
+    @GetMapping("/customer/{id}")
     public Customer getCustomerById(@PathVariable int id) {
         if (id > 4) {
             throw new StudentNotFoundException("student not found");
@@ -39,19 +39,21 @@ public class CustomerController {
         return customerService.getCustomerById(id);
 
     }
-
-    @DeleteMapping("/{id}")
+    @CrossOrigin
+    @DeleteMapping("/customer/{id}")
     public String deleteCustomer(@PathVariable int id){
         customerService.deleteCustomer(id);
         return "Deleted Successfully";
     }
 
     @CrossOrigin
-    @PostMapping("/add")
+    @PostMapping("/customer")
     public String addCustomer(@RequestBody Customer customer){
 
         return customerService.addCustomer(customer);
     }
+
+
 
 
 }
