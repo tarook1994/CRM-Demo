@@ -19,4 +19,7 @@ public interface CustomerService {
 
     @Transactional
     String addCustomer(Customer customer);
+
+    @Transactional
+    String updateCustomer(Customer customer, int id);
 }

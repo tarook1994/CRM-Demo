@@ -32,4 +32,10 @@ public class CustomerServiceImpl implements CustomerService {
         customerDAO.addCustomer(customer);
         return "Customer Added Successfully";
     }
+
+    @Override
+    public String updateCustomer(Customer customer, int id) {
+         customerDAO.updateCustomer(customer,id);
+         return "Customer Updated";
+    }
 }

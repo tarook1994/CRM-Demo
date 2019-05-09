@@ -59,4 +59,15 @@ public class CustomerDAOImpl implements CustomerDAO {
         session.save(customer);
         session.getTransaction().commit();
     }
+
+    @Override
+    public void updateCustomer(Customer customer, int id) {
+        Session session = sessionFactory.getCurrentSession();
+        session.beginTransaction();
+        Customer customerFromDatabase = (Customer) session.get(Customer.class,id);
+        customerFromDatabase.setFirstName(customer.getFirstName());
+        customerFromDatabase.setLastName(customer.getLastName());
+        customerFromDatabase.setEmail(customer.getEmail());
+        session.getTransaction().commit();
+    }
 }
