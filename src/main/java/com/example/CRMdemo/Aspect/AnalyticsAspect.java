@@ -1,11 +1,13 @@
 package com.example.CRMdemo.Aspect;
 
 
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import com.example.CRMdemo.Customer;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.*;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 @Aspect
@@ -18,7 +20,17 @@ public class AnalyticsAspect {
     }
 
     @Before("anyDAOMethod()")
-    public void logBeforeDAO(){
-        System.out.println("Analyzing");
+    public void logBeforeDAO(JoinPoint joinPoint){
+        System.out.println("Analyzing " + joinPoint.getArgs());
+    }
+
+    @AfterReturning(pointcut = "execution(* com.example.CRMdemo.DAO.CustomerDAOImpl.getCustomers(..))",
+                    returning = "result")
+    public void printOutput(List<Customer> result){
+        for (int i = 0; i <result.size() ; i++) {
+            System.out.println(result.get(i));
+
+        }
+
     }
 }
