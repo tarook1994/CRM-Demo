@@ -3,6 +3,7 @@ package com.example.CRMdemo.Aspect;
 
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
 
@@ -10,7 +11,13 @@ import org.springframework.stereotype.Component;
 @Aspect
 public class MyDemoLoggingAspect {
 
-    @Before("execution(* com.example.CRMdemo.DAO.CustomerDAOImpl.getCustomers())")
+
+    @Pointcut("execution(* com.example.CRMdemo.DAO.CustomerDAOImpl.*Customers())")
+    public void customersPointCutDeclaration(){
+
+    }
+
+    @Before("customersPointCutDeclaration()")
     public void beforeAddAccount(){
 
         System.out.println("Execution before getCustomers");
