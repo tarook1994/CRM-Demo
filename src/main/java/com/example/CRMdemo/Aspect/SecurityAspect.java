@@ -7,11 +7,10 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-
 @Component
 @Aspect
-@Order(2)
-public class MyDemoLoggingAspect {
+@Order(1)
+public class SecurityAspect {
 
     @Pointcut("execution(* com.example.CRMdemo.DAO.CustomerDAOImpl.*(..))")
     public void anyDAOMethod(){
@@ -20,8 +19,6 @@ public class MyDemoLoggingAspect {
 
     @Before("anyDAOMethod()")
     public void logBeforeDAO(){
-        System.out.println("Logging");
+        System.out.println("Securing");
     }
-
-
 }
