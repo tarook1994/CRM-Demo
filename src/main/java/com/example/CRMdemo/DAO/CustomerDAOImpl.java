@@ -16,7 +16,17 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     @Autowired
     SessionFactory sessionFactory;
+    private static final ThreadLocal<Session> threadLocal = new ThreadLocal();
 
+
+    public void closeSession() {
+        Session session = threadLocal.get();
+        threadLocal.set(null);
+
+        if (session != null) {
+            session.close();
+        }
+    }
 
 
     @Override
@@ -24,22 +34,24 @@ public class CustomerDAOImpl implements CustomerDAO {
 
 
         Session session = sessionFactory.getCurrentSession();
-            session.beginTransaction();
-          //  Customer c = (Customer) session.get(Customer.class, 1);
-            List<Customer> customerList = session.createQuery("from Customer").list();
-            session.getTransaction().commit();
-            return customerList;
+        session.beginTransaction();
+        //  Customer c = (Customer) session.get(Customer.class, 1);
+        List<Customer> customerList = session.createQuery("from Customer").list();
+        session.getTransaction().commit();
+        closeSession();
+        return customerList;
 
     }
 
     @Override
     public Customer getCustomerById(int id) {
         Session session = sessionFactory.getCurrentSession();
-            session.beginTransaction();
-            //  Customer c = (Customer) session.get(Customer.class, 1);
-            Customer customer = (Customer) session.get(Customer.class ,id);
-            session.getTransaction().commit();
-            return customer;
+        session.beginTransaction();
+        //  Customer c = (Customer) session.get(Customer.class, 1);
+        Customer customer = (Customer) session.get(Customer.class, id);
+        session.getTransaction().commit();
+        closeSession();
+        return customer;
 
     }
 
@@ -47,8 +59,9 @@ public class CustomerDAOImpl implements CustomerDAO {
     public void deleteCustomer(int id) {
         Session session = sessionFactory.getCurrentSession();
         session.beginTransaction();
-        Customer customer = (Customer) session.get(Customer.class ,id);
+        Customer customer = (Customer) session.get(Customer.class, id);
         session.delete(customer);
+        closeSession();
         session.getTransaction().commit();
     }
 
@@ -57,6 +70,7 @@ public class CustomerDAOImpl implements CustomerDAO {
         Session session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         session.save(customer);
+        closeSession();
         session.getTransaction().commit();
     }
 
@@ -64,10 +78,11 @@ public class CustomerDAOImpl implements CustomerDAO {
     public void updateCustomer(Customer customer, int id) {
         Session session = sessionFactory.getCurrentSession();
         session.beginTransaction();
-        Customer customerFromDatabase = (Customer) session.get(Customer.class,id);
+        Customer customerFromDatabase = (Customer) session.get(Customer.class, id);
         customerFromDatabase.setFirstName(customer.getFirstName());
         customerFromDatabase.setLastName(customer.getLastName());
         customerFromDatabase.setEmail(customer.getEmail());
         session.getTransaction().commit();
+        closeSession();
     }
 }
