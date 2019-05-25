@@ -4,6 +4,7 @@ package com.example.CRMdemo.Aspect;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.hibernate.Session;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Order(1)
 public class SecurityAspect {
+
+
 
     @Pointcut("execution(* com.example.CRMdemo.DAO.CustomerDAOImpl.*(..))")
     public void anyDAOMethod(){

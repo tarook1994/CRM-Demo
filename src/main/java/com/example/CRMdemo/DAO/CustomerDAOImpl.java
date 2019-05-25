@@ -16,17 +16,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     @Autowired
     SessionFactory sessionFactory;
-    private static final ThreadLocal<Session> threadLocal = new ThreadLocal();
 
-
-    public void closeSession() {
-        Session session = threadLocal.get();
-        threadLocal.set(null);
-
-        if (session != null) {
-            session.close();
-        }
-    }
 
 
     @Override
@@ -38,7 +28,6 @@ public class CustomerDAOImpl implements CustomerDAO {
         //  Customer c = (Customer) session.get(Customer.class, 1);
         List<Customer> customerList = session.createQuery("from Customer").list();
         session.getTransaction().commit();
-        closeSession();
         return customerList;
 
     }
@@ -50,7 +39,6 @@ public class CustomerDAOImpl implements CustomerDAO {
         //  Customer c = (Customer) session.get(Customer.class, 1);
         Customer customer = (Customer) session.get(Customer.class, id);
         session.getTransaction().commit();
-        closeSession();
         return customer;
 
     }
@@ -61,7 +49,6 @@ public class CustomerDAOImpl implements CustomerDAO {
         session.beginTransaction();
         Customer customer = (Customer) session.get(Customer.class, id);
         session.delete(customer);
-        closeSession();
         session.getTransaction().commit();
     }
 
@@ -70,7 +57,6 @@ public class CustomerDAOImpl implements CustomerDAO {
         Session session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         session.save(customer);
-        closeSession();
         session.getTransaction().commit();
     }
 
@@ -83,6 +69,5 @@ public class CustomerDAOImpl implements CustomerDAO {
         customerFromDatabase.setLastName(customer.getLastName());
         customerFromDatabase.setEmail(customer.getEmail());
         session.getTransaction().commit();
-        closeSession();
     }
 }
